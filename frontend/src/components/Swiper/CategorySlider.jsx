@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 
-const categorystyles = 'flex mt-6 h-[200px] w-[200px] bg-black';
+const categorystyles = 'flex ml-12 mt-6 h-[200px] w-[200px] bg-black';
 // import required modules
 import { Pagination } from 'swiper/modules';
 function CategorySlider() {

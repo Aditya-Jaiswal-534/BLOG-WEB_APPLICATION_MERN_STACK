@@ -7,13 +7,14 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 
-const categorystyles = 'flex mt-6 h-[300px] w-[200px] bg-black';
+const categorystyles = 'ml-12 flex mt-6 h-[300px] w-[200px] bg-black';
 // import required modules
 import { Pagination } from 'swiper/modules';
 export class BlogSlider extends Component {
   render() {
     return (
         <>
+        <div className='flex items-center justify-center'>
         <Swiper
           slidesPerView={1}
           spaceBetween={10}
@@ -49,6 +50,7 @@ export class BlogSlider extends Component {
           <SwiperSlide><div className={categorystyles}></div></SwiperSlide>
          
         </Swiper>
+        </div>
       </>
     )
   }
