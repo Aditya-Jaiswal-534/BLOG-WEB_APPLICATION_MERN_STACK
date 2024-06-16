@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema(
         },
         email:{
             type:String,
-            required:true
+            required:true,
+            unique:true
         },
         password:{
             type:String,
@@ -18,14 +19,18 @@ const userSchema = new mongoose.Schema(
             type:Array,
             default:[]
         }
+    },{
+        timestamps:true,
+        
     }
 )
-userSchema.pre('save',function(next){
+userSchema.pre('save',async function(next){
     const user = this;
     if(user.isModified('password')){
-        user.password = bcrypt.hash(user.password, 10);
+        user.password = await bcrypt.hash(user.password, 10);
     }
     next();
 
 })
-module.exports = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
+module.exports = User;
