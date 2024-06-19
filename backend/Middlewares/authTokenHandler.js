@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 function authTokenHandler(req,res,next){
     const authToken =req.cookies.authToken;
     const refreshToken = req.cookies.refreshToken;
+    console.log(authToken,refreshToken);
     console.log('authToken handler middleware called')
     if(!authToken ||!refreshToken){
         return res.status(401).json({
@@ -12,6 +13,7 @@ function authTokenHandler(req,res,next){
        if(err){
         jwt.verify(refreshToken,process.env.JWT_REFRESH_SECRET_KEY,(refreshErr,refreshDecoded)=>{
             if(refreshErr){
+                
                 return res.json({message:'Authentication failed both tokens are invalid'});
             }
             else{

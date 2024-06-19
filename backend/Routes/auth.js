@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const errorHanlder = require('../Middlewares/errorHandler');
+const authTokenHandler = require('../Middlewares/authTokenHandler');
+
 //rokk rwlq xgcp fprp
 
 const transporter = nodemailer.createTransport({
@@ -32,10 +34,10 @@ router.post('/sendotp', async (req,res)=>{
         }
         transporter.sendMail(mailOptions, async (err,info)=>{
             if(err){
-                return res.status(401).json({error:'something went wrong'})
+                return res.status(401).json({ok:false,error:'something went wrong'})
             }
             else{
-                res.status(200).json({message:"OTP sent succsessfully!",otp: otp})
+                res.status(200).json({ok:true,message:"OTP sent succsessfully!",otp: otp})
             }
 
         })
@@ -50,11 +52,11 @@ router.post('/register', async (req,res)=>{
 try{
     const {name,email,password} = req.body;
     if(!name || !email || !password){
-        return res.status(401).json({error:'please add all the fields'})}
+        return res.status(401).json({ok:false,error:'please add all the fields'})}
         const existinguser = await User.findOne({ email
     });
     if(existinguser){
-        return res.status(422).json({error:'user already exist'})
+        return res.status(422).json({ok:false,error:'user already exist'})
     }
     const newuser = new User({
         name,
@@ -63,7 +65,7 @@ try{
 
     })
      await newuser.save();
-    res.status(201).json({message:'user created successfully'});
+    res.status(201).json({ok:true,message:'user created successfully'});
 
 } catch(err){
     next(err);
@@ -76,16 +78,16 @@ router.post('/login', async (req, res) => {
     try{
         const {email,password} = req.body;
         if(!email||!password){
-            return res.status(401).json({error:'please add all the fields'});
+            return res.status(401).json({ok:false,error:'please add all the fields'});
         }
         const user = await User.findOne({email});
         if(!user){
-            return res.status(422).json({error:'user does not exist '});
+            return res.status(422).json({ok:false,error:'user does not exist '});
         }
         const isMatch = await bcrypt.compare(password,user.password);
         console.log(isMatch);
         if(!isMatch){
-            return res.status(422).json({error:'invalid password'});
+            return res.status(422).json({ok:false,error:'invalid password'});
         }
         const authToken = jwt.sign({userId:user._id},process.env.JWT_SECRET_KEY,{expiresIn: '10m'})
         const refreshToken = jwt.sign({userId:user._id},process.env.JWT_REFRESH_SECRET_KEY,{expiresIn: '40m'})
@@ -93,7 +95,7 @@ router.post('/login', async (req, res) => {
 
         res.cookie('authToken',authToken,{httpOnly:true});
         res.cookie('refreshToken',refreshToken,{httpOnly:true});
-        res.status(201).json({message:'user logged in successfully'});
+        res.status(201).json({ok:true,message:'user logged in successfully'});
        
     
     }
@@ -102,4 +104,21 @@ router.post('/login', async (req, res) => {
     }
 })
 router.use(errorHanlder);
+router.get('/checkLogin',authTokenHandler,async (req,res)=>{
+try{res.json({ok:true,message:'user logged in successfully'});} catch(err){
+    res.json({ok:false,error:err.message})
+}
+
+});
+router.get('/logout',authTokenHandler,async (req,res)=>{
+    try{
+            res.clearCookie('authToken');
+            res.clearCookie('refreshToken');
+            res.json({ok:true,message:'user logged out successfully',authtoken:authToken});
+    } catch(err){
+        res.json({ok:false,error:err.message})
+    }
+    
+    });
+router.get
 module.exports = router;

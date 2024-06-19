@@ -33,22 +33,23 @@ router.get('/test',authTokenHanlder,(req,res)=>{
 // C R U D OPERATONS
 
 router.post('/',authTokenHanlder,async (req,res)=>{
-    try{ const {title,description,image,paragraph} = req.body;
+    try{ const {title,description,category,imageUrl,paragraph} = req.body;
+    console.log(imageUrl);
      const blog = new Blog({
-        title,description,image,paragraph,owner:req.userId
+        title,description,category,imageUrl,paragraph,owner:req.userId
      })
      await blog.save();
      const user = await User.findById(req.userId);
      if(!user){
-         return res.status(404).json({message:"user not found"});
+         return res.status(404).json({ok:false,error:"user not found"});
      }
      user.blogs.push(blog._id);
      await user.save();
-     res.status(201).json("blog created successfully");
+     res.status(201).json({ok:true,message:"blog created successfully"});
 
     }
     catch(err){
-        res.status(500).json({message:err.message})
+        res.status(500).json({ok:false,error:err.message})
     }
 
 })
@@ -56,43 +57,43 @@ router.post('/',authTokenHanlder,async (req,res)=>{
 router.delete('/:id',authTokenHandler,checkOwner,async (req,res)=>{
    try{ const deletedblog = await Blog.findByIdAndDelete(req.params.id);
     if(!deletedblog){
-        return res.status(404).json({message:"blog not found"})
+        return res.status(404).json({ok:false,error:"blog not found"})
     }
     const user = await User.findById(req.userId);
     if(!user){
-        return res.status(404).json({message:"user not found"})
+        return res.status(404).json({ok:false,error:"user not found"})
     }
     user.blogs.pull(req.blog._id);
     await user.save();
-    res.status(200).json({message:"blog deleted successfully"});
+    res.status(200).json({ok:true,message:"blog deleted successfully"});
 
 
 }
 catch(err){
-    res.status(500).json({message:err.message})
+    res.status(500).json({ok:false,error:err.message})
 }
 
 })
 
 router.put('/:id',authTokenHanlder,checkOwner,async (req,res)=>{
   try{
-    const {title,description,image,paragraph} = req.body;
-     const updatedblog = await Blog.findByIdAndUpdate(req.params.id,{title,description,image,paragraph},{new:true});
+    const {title,description,category,imageUrl,paragraph} = req.body;
+     const updatedblog = await Blog.findByIdAndUpdate(req.params.id,{title,description,category,imageUrl,paragraph },{new:true});
      if(!updatedblog){
-         return res.status(404).json({message:"blog not found"})
+         return res.status(404).json({ok:false,error:"blog not found"})
      } 
-     res.status(200).json({message:"updated blog"});
+     res.status(200).json({ok:true,message:"updated blog"});
   }catch(err){
-    res.status(500).json({message:err.message})
+    res.status(500).json({ok:false,error:err.message})
   }
 })
 
 router.get('/:id',async (req,res)=>{
        try{ const blog = await Blog.findById(req.params.id);
-        if(!blog) return res.status(404).json({message:"blog not found check your id"})
+        if(!blog) return res.status(404).json({ok:false,error:"blog not found check your id"})
         res.json(blog);
        } catch(err){
-        res.status(500).json({message:err.message})
+        res.status(500).json({ok:false ,error:err.message})
 
        }
 })
@@ -117,7 +118,7 @@ router.get('/', async (req,res)=>{
            
     }
     catch(err){
-        res.status(500).json({message:err.message})
+        res.status(500).json({ok:false,error:err.message})
     }
 })
 module.exports = router;
