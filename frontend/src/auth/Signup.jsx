@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { Link } from 'react-router-dom'
 import {toast,ToastContainer} from 'react-toastify'
-
+import signupimage from '../assets/signupimage.jpeg'
 
 function Signup() {
   const [formData, setFormData] = useState({name:"",email:"",password:"",confirmPassword:""});
@@ -90,12 +90,17 @@ return(
     <Navbar></Navbar>
     <div className="authout flex w-[full] bg-violet-400 h-[670px] p-4 items-center justify-center">
         <div className="authin flex">
-            <div className="left-side bg-blue-500 w-72 h-80 mr-2">
+
+
+            <div className="left-side bg-blue-500 w-72 h-80 mr-2 items-stretch">
+                <img src={signupimage} alt="this is the " className='object-cover h-[100%]' />
 
             </div>
+
+
             <div className="right-side flex flex-col items-stretch">
                 <form action="" className='flex flex-col justify-between items-center h-80 ' onSubmit={handleSubmit}>
-                 <div className="forminputcont">
+                 <div className="forminputcont flex justify-between" >
                     <label htmlFor="name">name</label>
                     <input type="text" id='name' placeholder='enter your username here' name="name" value ={formData.name} onChange={handleChange}/>
                     {errors.name && <span className="formerror">{errors.name}</span>}
@@ -119,8 +124,8 @@ return(
                                 <span className="formerror">{errors.confirmPassword}</span>
                             )}
                  </div>
-                 <button type='submit'> Submit</button>
-                 <p className='inline-block '>Already have an account?  </p><Link to='/auth/signin'> <u>Login</u></Link>
+                 <button type='submit' className='bg-black text-white hover:bg-slate-600 p-2 rounded-lg'> Submit</button>
+                 <p className='inline-block '>Already have an account?  </p><Link to='/auth/signin'className='bg-black text-white hover:bg-slate-600 p-2 rounded-lg'> <u>Login</u></Link>
 
                 </form>
                 

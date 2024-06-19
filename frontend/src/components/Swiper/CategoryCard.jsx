@@ -12,6 +12,7 @@ const CategoryCard = (data) => {
         }} className='h-16 bg-black text-white
         '>
             {name}
+         
         </p>
     </div>
     )

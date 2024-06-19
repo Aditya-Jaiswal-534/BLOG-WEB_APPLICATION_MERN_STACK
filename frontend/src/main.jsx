@@ -7,6 +7,7 @@ import Add from './pages/Add.jsx';
 import './index.css'
 import Profile from './pages/Profile.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import BlogPage from './pages/BlogPage.jsx';
 import Contact from './pages/Contact.jsx';
 import Signin from './auth/Signin.jsx';
 import Signup from './auth/Signup.jsx';
@@ -45,6 +46,10 @@ const router = createBrowserRouter([{
 },{
   path:'/auth/signin',
   element: <Signin></Signin>,
+  errorElement: <h1>Error</h1>,
+},{
+  path:'/blog',
+  element: <BlogPage></BlogPage>,
   errorElement: <h1>Error</h1>,
 }]);
 

@@ -1,17 +1,58 @@
-import React, { Component } from 'react'
+import React, { Component ,useState,useEffect} from 'react'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import BlogCard from './BlogCard';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
+import {toast,ToastContainer} from 'react-toastify'
 
 
-const categorystyles = 'ml-12 flex mt-6 h-[300px] w-[200px] bg-black';
 // import required modules
 import { Pagination } from 'swiper/modules';
-export class BlogSlider extends Component {
-  render() {
+const BlogSlider = () => {
+  const [blogs, setBlogs] = useState([{_id: "",
+    title: "",
+    description: "",
+    image: File | null,
+    imageUrl: "",
+    paragraph: [],
+    category: "",}])
+    const get10latestblogs = () => {
+        fetch(`${import.meta.env.VITE_BACKEND_API}/blog`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
+            })
+            .then((res) => {
+           
+                return res.json();
+            })
+            .then((response) => {
+                if (response.ok) {
+                    console.log(response)
+                    setBlogs(response.data.blogs);
+                }
+                else {
+                    // toast(response.message, {
+                    //     type: 'error',
+                    // })
+                }
+            })
+            .catch((error) => {
+                // toast(error.message, {
+                //     type: 'error',
+                // })
+
+            })
+    }
+    useEffect(() => {
+        get10latestblogs();
+    }, [])
+  
     return (
         <>
         <div className='flex items-center justify-center'>
@@ -42,18 +83,23 @@ export class BlogSlider extends Component {
           modules={[Pagination]}
           className="mySwiper"
         >
-          <SwiperSlide><div className={categorystyles}></div> </SwiperSlide>
-          <SwiperSlide><div className={categorystyles}></div> </SwiperSlide>
-          <SwiperSlide><div className={categorystyles}></div></SwiperSlide>
-          <SwiperSlide><div className={categorystyles}></div></SwiperSlide>
-          <SwiperSlide><div className={categorystyles}></div></SwiperSlide>
-          <SwiperSlide><div className={categorystyles}></div></SwiperSlide>
+        {
+                    blogs.map((blog) => {
+                        return (
+                            <SwiperSlide>
+                                <BlogCard {...blog} />
+                            </SwiperSlide>
+                        );
+                    })
+                }
+
          
         </Swiper>
         </div>
+        <ToastContainer></ToastContainer>
       </>
     )
-  }
+  
 }
 
 export default BlogSlider
