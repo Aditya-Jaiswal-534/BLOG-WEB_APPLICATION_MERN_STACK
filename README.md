@@ -37,9 +37,17 @@ The application allows users to register and authenticate securely. Once authent
    - Create a `.env` file in the `backend` directory.
    - Define the following variables:
      ```
-     PORT=3001
-     MONGODB_URI=your_mongodb_uri
-     SECRET_KEY=your_secret_key
+     MONGO_URL = your_monogo_url
+JWT_SECRET_KEY = your_secret_key
+JWT_REFRESH_SECRET_KEY =refresh_secret_key
+DB_NAME = database_name that you want to provide
+COMPANY_EMAIL = your company email
+
+CLOUDINARY_CLOUD_NAME= cloud_name
+	
+CLOUDINARY_API_KEY = your_api_key
+
+CLOUDINARY_API_SECRET = your_secret
      ```
 
 4. Start the frontend and backend servers:
@@ -48,14 +56,14 @@ cd ../frontend<br/>
 npm run dev
 
 cd ../backend<br/>
-node index.js
+npm run dev
 
 ## Usage
 
 1. Register or log in to the application.
-2. Upload an image containing your face.
-3. Wait for the system to analyze your facial expression.
-4. Receive music recommendations based on your mood.
+2.Add your blog
+3. Wait for the system to upload blogs.
+4. Browse through other blogs.
 
 ## Technologies Used
 
@@ -63,8 +71,7 @@ node index.js
 - Node.js
 - Express
 - MongoDB
-- PyTorch
-- TensorFlow
+-tailwindcss
 
 ## Contributing
 
@@ -72,4 +79,4 @@ Contributions are welcome! Please fork the repository and submit a pull request 
 
 ## Contact
 
-For any inquiries or support, please contact [Aditya Sahani](mailto:b22cs003@iitj.ac.in),[Aditya Jaiswal](mailto:b22cs025@iitj.ac.in), [Gaurav Manish](mailto:b22cs079@iitj.ac.in).
+For any inquiries or support, please contact [Aditya Jaiswal](mailto:b22cs025@iitj.ac.in).
