@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import { Link } from 'react-router-dom'
 import {toast,ToastContainer} from 'react-toastify'
-import signupimage from '../assets/signupimage.jpeg'
+import signupimage from './signupimage.png'
 
 function Signup() {
   const [formData, setFormData] = useState({name:"",email:"",password:"",confirmPassword:""});
@@ -84,48 +84,52 @@ const handleSubmit = async (e) => {
     });
 })
 }
-
+var inputstyles ='p-2 rounded-lg border border-black flex-1 placeholder:text-center placeholder:text-slate-700 w-full';
 return(
     <>
     <Navbar></Navbar>
-    <div className="authout flex w-[full] bg-violet-400 h-[670px] p-4 items-center justify-center">
-        <div className="authin flex">
+    <div className="authout flex w-full bg h-[700px] p-4 items-center justify-center bg-auto sign"  >
+        <div className="authin flex w-[70%]">
 
 
-            <div className="left-side bg-blue-500 w-72 h-80 mr-2 items-stretch">
+            {/* <div className="left-side bg-blue-500 w-full h-80 mr-2 items-stretch">
                 <img src={signupimage} alt="this is the " className='object-cover h-[100%]' />
 
-            </div>
+            </div> */}
 
 
-            <div className="right-side flex flex-col items-stretch">
-                <form action="" className='flex flex-col justify-between items-center h-80 ' onSubmit={handleSubmit}>
-                 <div className="forminputcont flex justify-between" >
-                    <label htmlFor="name">name</label>
-                    <input type="text" id='name' placeholder='enter your username here' name="name" value ={formData.name} onChange={handleChange}/>
+            <div className="right-side flex flex-col items-stretch w-full">
+                <form action="" className='flex flex-col justify-between  h-80 ' onSubmit={handleSubmit}>
+                 <div className="forminputcont flex justify-between  items-center" >
+                    <label htmlFor="name" className='mr-4 font-bold text-xl'>Name</label>
+
+                    <input type="text" id='name' placeholder='enter your username here' name="name" value ={formData.name} onChange={handleChange} className='p-2 rounded-lg border border-black flex-1 placeholder:text-center placeholder:text-slate-700 w-full'/>
                     {errors.name && <span className="formerror">{errors.name}</span>}
                  </div>
-                 <div className="forminputcont">
-                    <label htmlFor="email">email</label>
-                    <input type="text" id='email' placeholder='enter your username here' name="email" value ={formData.email} onChange={handleChange}/>
+                 <div className="forminputcont flex items-center">
+                    <label htmlFor="email" className='mr-4 font-bold text-xl'>Email</label>
+                    <input type="text" id='email' placeholder='enter your username here' name="email" value ={formData.email} onChange={handleChange} className={inputstyles}/>
                     {errors.email && <span className="formerror">{errors.email}</span>}
                  </div>
-                 <div className="forminputcont">
-                    <label htmlFor="password">Password</label>
-                    <input type="text" id='password' placeholder='enter your password  here' name="password" value ={formData.password} onChange={handleChange}/>
+                 <div className="forminputcont flex items-center">
+                    <label htmlFor="password" className='mr-4 font-bold text-xl'>Password</label>
+                    <input type="text" id='password' placeholder='enter your password  here' name="password" value ={formData.password} onChange={handleChange} className={inputstyles}/>
                     {errors.password && (
                                 <span className="formerror">{errors.password}</span>
                             )}
                  </div>
-                 <div className="forminputcont">
-                    <label htmlFor="confirmation">Confirm Password</label>
-                    <input type="text" id='confirmation' placeholder='please confirm your password' name="confirmPassword" value ={formData.confirmPassword} onChange={handleChange} />
+                 <div className="forminputcont flex items-center">
+                    <label htmlFor="confirmation" className='mr-4  text-lg font-bold'>Confirm Password</label>
+                    <input type="text" id='confirmation' placeholder='please confirm your password' name="confirmPassword" value ={formData.confirmPassword} onChange={handleChange} className={inputstyles}/>
                     {errors.confirmPassword && (
                                 <span className="formerror">{errors.confirmPassword}</span>
                             )}
                  </div>
-                 <button type='submit' className='bg-black text-white hover:bg-slate-600 p-2 rounded-lg'> Submit</button>
-                 <p className='inline-block '>Already have an account?  </p><Link to='/auth/signin'className='bg-black text-white hover:bg-slate-600 p-2 rounded-lg'> <u>Login</u></Link>
+                 <div className='flex justify-center mt-4'>
+                 <button type='submit' className='bg-black text-white hover:bg-slate-600 p-2 rounded-lg'> Submit</button></div>
+                 <div className='flex flex-col
+                 items-center'>
+                 <p className='inline-block font-bold'>Already have an account?  </p><Link to='/auth/signin'className='bg-black text-white hover:bg-slate-600 px-4 py-2 rounded-lg text-center'> <u>Login</u></Link></div>
 
                 </form>
                 

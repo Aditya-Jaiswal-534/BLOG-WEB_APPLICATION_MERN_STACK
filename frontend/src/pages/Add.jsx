@@ -247,7 +247,9 @@ function Add() {
   useEffect(() => {
     console.log(blog)
   }, [blog])
-
+  var inputcontstyle ='inputcontainer flex flex-col p-2 m-2  items-center';
+  var labelstyle ='text-xl font-bold font-mono mb-2 border-2 border-slate-400 p-2';
+  var inputBoxstyle = 'w-full border-2 border-gray-500 shadow shadow-slate-500 hover:shadow-inner focus:shadow-red-500 hover:duration-500 p-2 text-center mb-8 '
   return (
     <>
   
@@ -264,38 +266,38 @@ function Add() {
         </div>
       }
     <Navbar></Navbar>
-    <div className="add-out bg-orange-400 h-[full] w-full px-20 py-4">
-      <div className="add-in">
-        <form action="">
-          <div className="inputcontainer">
-            <label htmlFor=""> Blog Name</label>
-            <textarea name="" id="" className='w-full'  value={blog.title}
+    <div className="add-out h-[full] flex justify-center w-full py-4">
+      <div className="add-in flex flex-col justify-center items-center p-2 border-2 border-green-600 w-[80%] ">
+        <form action="" className='w-full p-4'>
+          <div className="inputcontainer flex flex-col p-2 m-2 w-full items-center">
+            <label htmlFor="" className={labelstyle}> Blog Name</label>
+            <textarea name="" id="" className='w-full border-2 border-gray-500 shadow shadow-slate-500 hover:shadow-inner focus:shadow-red-500 hover:duration-500 p-2 text-center'  value={blog.title} placeholder='Enter the Blog Title'
               onChange={(e) => setBlog({ ...blog, title: e.target.value })}></textarea>
           </div>
-          <div className='inputcontainer'>
-            <label>Blog Category</label>
+          <div className={inputcontstyle}>
+            <label className={labelstyle}>Blog Category</label>
             <select
               value={blog.category} // Set the selected category value
-              onChange={(e) => setBlog({ ...blog, category: e.target.value })} // Update the selected category
+              onChange={(e) => setBlog({ ...blog, category: e.target.value })} className={inputBoxstyle} // Update the selected category
             >
-              <option value="">Select a category</option> {/* Default option */}
+              <option value="" className='bg-slate-500 text-white font-serif'>Select a category</option> {/* Default option */}
               {categories.map((category) => (
-                <option key={category} value={category}>
+                <option className='bg-slate-500 text-white font-serif' key={category} value={category}>
                   {category}
                 </option>
               ))}
             </select>
           </div>
-          <div className="inputcontainer">
-            <label htmlFor=""> Blog Description</label>
+          <div className={inputcontstyle}>
+            <label htmlFor="" className={labelstyle}> Blog Description</label>
             
-            <textarea name="" id="" type='text'  className='w-full h-80'   value={blog.description}
-             placeholder="Enter Blog Description"
+            <textarea name="" id="" type='text'     value={blog.description}
+             placeholder="Enter Blog Description" className={`${inputBoxstyle}`+'h-36'}
               onChange={(e) => setBlog({ ...blog, description: e.target.value })}></textarea>
           </div>
-          <div className="inputcontainer">
-            <label htmlFor=""> Blog-Image</label>
-            <input type="file" onChange={(e) => {
+          <div className={inputcontstyle}>
+            <label htmlFor="" className={labelstyle}> Blog-Image</label>
+            <input type="file"  className={`${inputBoxstyle}`+'justify-center'} onChange={(e) => {
                 const selectedImage = e.target.files?.[0];// Get the selected image file
                 if (selectedImage) {
                   setBlog({ ...blog, image: selectedImage }); // Update the paragraphImage state with the URL
@@ -303,7 +305,7 @@ function Add() {
               }} />
             
           </div>
-          <div className='blogtempparagraphs'>
+          <div className='blogtempparagraphs text-lg mb-4 border-2 border-black p-2 shadow-inner shadow-gray-500 flex flex-col '>
             {
               blog.paragraph.sort(sortParagraphs).map((paragraph) => (
                 <div key={String(paragraph.createdAt)}>
@@ -315,33 +317,33 @@ function Add() {
 
                   <div className='section1'>
                     <h1>{paragraph.title}</h1>
-                    <p>{paragraph.description}</p>
+                    <p className='text-lg'>{paragraph.description}</p>
                   </div>
-                  {paragraph.image && <img src={URL.createObjectURL(paragraph.image)} alt={`Image for ${paragraph.title}`} />}
+                  {paragraph.image && <img src={URL.createObjectURL(paragraph.image)} className='max-w-[40%] h-auto rounded-sm ' alt={`Image for ${paragraph.title}`} />}
                 </div>
               ))
             }
           </div>
-          <div className='forminput_cont'>
-              <label>Paragraph Position</label>
-              <input type="number"
+          <div className={inputcontstyle}>
+              <label className={labelstyle}>Paragraph Position</label>
+              <input type="number"  className={inputBoxstyle}
                 value={paragraphForm.position}
 
                 placeholder="Enter paragraph Position"
                 onChange={(e) => setParagraphForm({ ...paragraphForm, position: e.target.value })} />
             </div> 
-          <div className="inputcontainer">
-            <label htmlFor=""> Paragraph Name</label>
-            <textarea name="" id="" className='w-full' value={paragraphForm.title} placeholder="Enter paragraph Title" onChange={(e) => setParagraphForm({ ...paragraphForm, title: e.target.value })} ></textarea>
+          <div className={inputcontstyle}>
+            <label htmlFor="" className={labelstyle}> Paragraph Name</label>
+            <textarea name="" id=""  className={inputBoxstyle} value={paragraphForm.title} placeholder="Enter paragraph Title" onChange={(e) => setParagraphForm({ ...paragraphForm, title: e.target.value })} ></textarea>
           </div>
-          <div className="inputcontainer">
-            <label htmlFor=""> Paragraph Description</label>
+          <div className={inputcontstyle}>
+            <label htmlFor="" className={labelstyle}> Paragraph Description</label>
             
-            <textarea name="" id="" type='text'  className='w-full h-80' placeholder="Enter Paragraph Description" value={paragraphForm.description} onChange={(e) => setParagraphForm({ ...paragraphForm, description: e.target.value })}></textarea>
+            <textarea name="" id="" type='text'   className={`${inputBoxstyle}`+'h-56'} placeholder="Enter Paragraph Description" value={paragraphForm.description} onChange={(e) => setParagraphForm({ ...paragraphForm, description: e.target.value })}></textarea>
           </div>
-          <div className="inputcontainer">
-            <label htmlFor=""> Paragraph-Image</label>
-            <input type="file" id='pgimg'
+          <div className={inputcontstyle}>
+            <label htmlFor="" className={labelstyle}> Paragraph-Image</label>
+            <input type="file" id='pgimg'  className={inputBoxstyle}
                 onChange={(e) => {
                   const selectedImage = e.target.files?.[0];// Get the selected image file
                   if (selectedImage) {
@@ -351,14 +353,15 @@ function Add() {
                 }} />
             
           </div>
-          <button type='button'  onClick={(e) => {
+          <div className='flex justify-center'>
+          <button type='button' className='p-2 bg-black text-white font-bold  hover:bg-gray-600 rounded-lg '  onClick={(e) => {
               e.preventDefault(); // Prevent the default form submission
               pushParagraphToBlog();
-            }}>Add More paragraphs</button>
+            }}>Add More paragraphs</button></div>
         </form>
-        <button type='submit' className="main_button"  onClick={(e) => {
+        <button type='submit' className='p-2 bg-black text-white font-bold  hover:bg-gray-600 rounded-lg '  onClick={(e) => {
               e.preventDefault(); // Prevent the default form submission
-              uploadBLog();}}>submit
+              uploadBLog();}}>Submit
           <i className="fas fa-plus-circle"></i>
         </button>
       </div>

@@ -55,7 +55,7 @@ const BlogSlider = () => {
   
     return (
         <>
-        <div className='flex items-center justify-center'>
+        <div className='flex items-center justify-center p-4'>
         <Swiper
           slidesPerView={1}
           spaceBetween={10}
@@ -81,7 +81,7 @@ const BlogSlider = () => {
             },
           }}
           modules={[Pagination]}
-          className="mySwiper"
+          className="mySwiper "
         >
         {
                     blogs.map((blog) => {

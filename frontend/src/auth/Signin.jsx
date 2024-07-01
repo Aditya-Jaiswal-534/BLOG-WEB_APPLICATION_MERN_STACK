@@ -98,28 +98,33 @@ function Signin() {
  }
 
    }
+   var inputstyles ='p-2 rounded-lg border border-black flex-1 placeholder:text-center placeholder:text-slate-700 w-full';
   return (
     <>
     <Navbar></Navbar>
-    <div className="authout flex w-[full] bg-violet-400 h-[670px] p-4 items-center justify-center">
-        <div className="authin flex">
-            <div className="left-side bg-blue-500 w-72 h-80 mr-2">
-
-            </div>
-            <div className="right-side flex flex-col items-stretch">
-                <form action="" className='flex flex-col justify-between items-center h-80 ' onSubmit={handleSubmit}>
-                 <div className="forminputcont">
-                    <label htmlFor="email">Email</label>
-                    <input type="text" id='email' placeholder='enter your email here'  name="email" onChange={handleChange}/>
+    <div className="authout flex w-full bg h-[700px] p-4 items-center justify-center bg-auto sign">
+        <div className="authin flex w-[70%]">
+           
+            <div className="right-side flex flex-col items-stretch w-full">
+                <form action=""  className='flex flex-col justify-between  h-80 ' onSubmit={handleSubmit}>
+                 <div className="forminputcont flex justify-between  items-center">
+                    <label htmlFor="email" className='mr-4 font-bold text-xl'>Email</label>
+                    <input type="text" id='email' placeholder='enter your email here'  name="email" onChange={handleChange} className={inputstyles}/>
                     {errors.email && <span className="form-error">{errors.email}</span>}
                  </div>
-                 <div className="forminputcont">
-                    <label htmlFor="password">Password</label>
-                    <input type="text" id='password' placeholder='enter your password  here' name="password" onChange={handleChange}/>
+                 <div className="forminputcont flex justify-between  items-center">
+                    <label className='mr-4 font-bold text-xl'htmlFor="password">Password</label>
+                    <input type="text" id='password' placeholder='enter your password  here' name="password" onChange={handleChange}  className={inputstyles}/>
                  </div>
                 {errors.password && <span className="form-error">{errors.password}</span>}
-                 <button type='submit'> Login</button>
-                 <p className='inline-block '>Don't have an account? <Link to='/auth/signup'> <u>Signup</u></Link> </p>
+                <div className='flex justify-center mt-4'>
+                <button type='submit' className='bg-black text-white hover:bg-slate-600 p-4 rounded-lg'> Login</button></div>
+                <div className='flex justify-center'>
+                <p className='inline-block font-bold'>Don't have an account?  </p>
+                </div>
+                <div className='flex flex-col
+                 items-center'>
+                <Link to='/auth/signup'className='bg-black text-white hover:bg-slate-600 px-4 py-2 rounded-lg text-center'> <u>SignUp</u></Link></div>
 
                 </form>
                 

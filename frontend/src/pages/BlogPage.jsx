@@ -4,6 +4,7 @@ import ClockLoader from "react-spinners/ClockLoader";
 import BlogSlider from '../components/Swiper/BlogSlider';
 import Navbar from '../components/Navbar';
 import { toast } from 'react-toastify';
+import './blogpg.css'
 
 function BlogPage() {
     const [SearchParameter] = useSearchParams();
@@ -21,7 +22,7 @@ function BlogPage() {
         createdAt: '',
         updatedAt: ''
     });
-    const [blogcreatedat, setBlogcreatedat] = useState('')
+    const [blogcreatedat, setBlogcreatedat] = useState('');
     const getBlogbyId = () => {
         setLoading(true)
         fetch(`${import.meta.env.VITE_BACKEND_API}/blog/${blogid}`,
@@ -35,6 +36,7 @@ function BlogPage() {
                 return res.json();
             })
             .then((response) => {
+                console.log('hwllow',response);
                 setLoading(false)
                 if (response.ok) {
                     console.log(response.data.blog)
@@ -94,15 +96,15 @@ function BlogPage() {
                 />
             </div>
             :
-            <div className='blogpage'>
+            <div className='blogpage flex justify-center mt-[100px] flex-col gap-4'>
                 <div className='c1'>
-                    <p className='createdat'>Created at {blogcreatedat}</p>
+                    <p className='createdat font-mono italic font-bold '>Created at {blogcreatedat}  </p>
                     <p className='title'>{blog.title}</p>
                     <p className='category'>{blog.category}</p>
 
                    {
                     blog.imageUrl.length>0 && 
-                    <Image src={blog.imageUrl} alt={blog.title} width={100} height={100} className='blogimg' unoptimized />
+                    <img src={blog.imageUrl} alt={blog.title} width={100} height={100} className='blogimg' unoptimized />
                    }
                     <p className='description'>{blog.description}</p>
                 </div>
@@ -113,7 +115,7 @@ function BlogPage() {
                         } key={index}>
                             {
                                 paragraph.imageUrl.length > 0 &&
-                                <Image src={paragraph.imageUrl} alt={blog.title} width={100} height={100}
+                                <img src={paragraph.imageUrl} alt={blog.title} width={100} height={100}
                                     className='paraimg' unoptimized />
                             }
                             <div>

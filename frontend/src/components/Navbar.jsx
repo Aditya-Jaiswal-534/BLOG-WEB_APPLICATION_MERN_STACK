@@ -9,6 +9,7 @@ import { toast,ToastContainer } from 'react-toastify';
 import Cookie from 'js-cookie'
 
 function Navbar() {
+  var button_style ='border p-2 rounded-lg hover:bg-white hover:border hover:border-slate-700 hover:text-slate-700 hover:duration-200 hover:font-bold';
    
   const [auth,setAuth] = useState(false)
   // console.log(import.meta.env.VITE_BACKEND_API)
@@ -88,18 +89,18 @@ const handleLogout = async ()=>{
 }
     return (
     <>
-    <nav className='navbar flex justify-between bg-slate-700 px-2 py-1 items-center'>
+    <nav className='navbar flex  justify-between bg-slate-700 px-4 py-1 items-center'>
       <div className="left-side flex  w-28 justify-between ">
      <Link to='/profile'><FaRegUserCircle className='icon h-full object-fit w-6 text-white' ></FaRegUserCircle></Link>
      <Link to='/add'><FaPlusCircle className='icon h-full w-6 text-white'></FaPlusCircle></Link>
      <Link to='/search'><FaSearchPlus className='icon h-full w-6 text-white'></FaSearchPlus></Link>
     
       </div>
-      <div className="mid-side">
+      <div className="mid-side flex flex-1 justify-center">
       <Link to='/'><img src={logo} alt="" className='size-14'/></Link>
       </div>
 
-      <div className="right-side flex text-white space-x-2 h-full">
+      <div className="right-side flex text-white space-x-2 h-full items-center">
         <Link to='/' className='align-middle'>
           Home
         </Link>
@@ -116,12 +117,12 @@ const handleLogout = async ()=>{
             </button>
         
          :
-          <div className='flex justify-between w-24'>
+          <div className='flex justify-between w-32 items-center'>
           <Link to='/auth/signup' className='items-center' >
-          <button> Signup</button> 
+          <button className={button_style}> Signup</button> 
           </Link>
           <Link to='/auth/signin' className='items-center' >
-          <button> Login</button> 
+          <button className={button_style}> Login</button> 
           </Link>
           </div>
 }

@@ -7,7 +7,7 @@ const BlogCard = (data) => {
     return (
         <div
        
-          className='blogcard w-[300px]'
+          className='blogcard w-[full] h-64'
             onClick={() => {
                 window.location.href = `/blog?blogid=${_id}`
             }}
@@ -20,7 +20,7 @@ const BlogCard = (data) => {
 
             </div>
             <p >
-                {console.log(title)}
+              
                 {title}
             </p>
         </div>
