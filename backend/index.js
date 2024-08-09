@@ -6,6 +6,7 @@ const app = express();
  const cors = require('cors');// for persmission for the front end link to use our backend
  const imageuploadRoutes = require('./Routes/imageUploadRoutes')
 const authRoute = require("./Routes/auth")
+const dataRoute = require("./Routes/data")
 const blogRoute = require("./Routes/Blog")
 const PORT = 8000;
 require('dotenv').config();
@@ -19,6 +20,7 @@ app.use(cors({
 app.use(cookieParser())
 
 app.use('/auth', authRoute);
+app.use('/data',dataRoute);
 app.use('/blog', blogRoute);
 app.use('/image',imageuploadRoutes);
 

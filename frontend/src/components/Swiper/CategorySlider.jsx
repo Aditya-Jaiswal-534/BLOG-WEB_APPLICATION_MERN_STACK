@@ -40,7 +40,7 @@ function CategorySlider() {
 
   return (
     <>
-    <div className='font-bold text-2xl text-center mt-3'>Choose Your Category</div>
+    
     <div className=''>
     <Swiper
       slidesPerView={1}

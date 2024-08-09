@@ -85,7 +85,7 @@ router.post('/login', async (req, res,next) => {
             return res.status(422).json({ok:false,error:'user does not exist '});
         }
         const isMatch = await bcrypt.compare(password,user.password);
-        console.log(isMatch);
+        
         if(!isMatch){
             return res.status(422).json({ok:false,error:'invalid password'});
         }
@@ -112,9 +112,11 @@ try{res.json({ok:true,message:'user logged in successfully'});} catch(err){
 });
 router.get('/logout',authTokenHandler,async (req,res)=>{
     try{
+         
             res.clearCookie('authToken');
             res.clearCookie('refreshToken');
-            res.json({ok:true,message:'user logged out successfully',authtoken:authToken});
+            
+            res.json({ok:true,message:'user logged out successfully'});
     } catch(err){
         res.json({ok:false,error:err.message})
     }

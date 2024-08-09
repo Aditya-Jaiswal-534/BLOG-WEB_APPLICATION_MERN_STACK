@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken')
 function authTokenHandler(req,res,next){
     const authToken =req.cookies.authToken;
     const refreshToken = req.cookies.refreshToken;
-    console.log(authToken,refreshToken);
-    console.log('authToken handler middleware called')
+   
     if(!authToken ||!refreshToken){
         return res.status(401).json({
             message:'unauthenticated entry , no tokens provided'

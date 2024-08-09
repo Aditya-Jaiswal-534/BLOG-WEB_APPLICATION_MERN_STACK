@@ -1,138 +1,121 @@
 import React, { useEffect, useState } from 'react'
-import { FaSearchPlus,FaRegUserCircle,FaPlusCircle } from "react-icons/fa";
-import {deleteCookie} from 'cookies-next'
+import { FaSearchPlus, FaRegUserCircle, FaPlusCircle } from "react-icons/fa";
+import { deleteCookie } from 'cookies-next'
 import { Link } from 'react-router-dom';
 import logo from '../assets/blogging.png';
-import { toast,ToastContainer } from 'react-toastify';
-// import {Cookie} from 'js-cookie'
-
+import { toast, ToastContainer } from 'react-toastify';
 import Cookie from 'js-cookie'
 
 function Navbar() {
-  var button_style ='border p-2 rounded-lg hover:bg-white hover:border hover:border-slate-700 hover:text-slate-700 hover:duration-200 hover:font-bold';
-   
-  const [auth,setAuth] = useState(false)
-  // console.log(import.meta.env.VITE_BACKEND_API)
-  const checkLogin=  () =>{
-    
-    fetch(`${import.meta.env.VITE_BACKEND_API}/auth/checkLogin`,{
-     method:"GET",
-     headers:{
-         'Content-Type': 'application/json',
-     },
-     credentials: 'include'
+  const buttonStyle = 'border-2 p-2 rounded-full hover:bg-gray-800 hover:border-gray-800 hover:text-white transition duration-300 ease-in-out';
+
+  const [auth, setAuth] = useState(false);
+
+  const checkLogin = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_API}/auth/checkLogin`, {
+        method: 'GET',
+        headers: {
+          'content': 'application/json'
+        },
+        credentials: 'include',
+      }).then((res) => {
+        return res.json()
+      })
+        .then((res) => {
+          if (res.ok) {
+            setAuth(true);
+          }
+        })
+    }
+    catch (err) {
+      throw (err)
+    }
+  }
+
+  const handleLogout = async () => {
+    await fetch(`${import.meta.env.VITE_BACKEND_API}/auth/logout`, {
+      method: 'GET',
+      headers: {
+        'content': 'application/json',
+      },
+      credentials: 'include',
     })
-    .then((res)=>{ return  res.json()})
-    .then((response)=>{
-     console.log(response);
-     console.log(auth);
-      if(response.ok){
-        
-        setAuth(true);
-      }
-      else{
-        setAuth(false);
-      }
-      console.log(auth);
-    }).catch((err)=>{
-      toast(err.message, {
-        type: 'error',
-        position: 'top-right',
-        autoClose: 2000
-    });
-  })
-  
+      .then((res) => {
+        return res.json();
+      })
+      .then((res) => {
+        if (res.ok) {
+          setAuth(false);
+          window.location.href = '/auth/signin'
+        }
+      })
+  }
 
- }
-useEffect(()=>{
-  checkLogin()
-  
-  
+  useEffect(() => {
+    checkLogin();
+  }, [auth])
 
-},[])
-
-const handleLogout = async ()=>{
-  await fetch(`${import.meta.env.VITE_BACKEND_API}/auth/logout`,{
-  method:"GET",
-  headers:{
-      'Content-Type': 'application/json',
-  },
-  credentials: 'include'
- }).then((res)=> {return res.json()})
- .then((response)=>{
- 
-   if(response.ok){
-    
-    toast(response.message, {
-      type: 'success',
-      position: 'top-right',
-      autoClose: 2000
-  }) 
-    
-   }
-   else{
-    toast(response.error, {
-      type: 'error',
-      position: 'top-right',
-      autoClose: 2000
-  });
-   }
-   console.log(auth);
- }).catch((err)=>{
-   toast(err.message, {
-     type: 'error',
-     position: 'top-right',
-     autoClose: 2000
- })})
- 
-  window.location.href = '/auth/signin';
-}
-    return (
+  return (
     <>
-    <nav className='navbar flex  justify-between bg-slate-700 px-4 py-1 items-center'>
-      <div className="left-side flex  w-28 justify-between ">
-     <Link to='/profile'><FaRegUserCircle className='icon h-full object-fit w-6 text-white' ></FaRegUserCircle></Link>
-     <Link to='/add'><FaPlusCircle className='icon h-full w-6 text-white'></FaPlusCircle></Link>
-     <Link to='/search'><FaSearchPlus className='icon h-full w-6 text-white'></FaSearchPlus></Link>
-    
-      </div>
-      <div className="mid-side flex flex-1 justify-center">
-      <Link to='/'><img src={logo} alt="" className='size-14'/></Link>
-      </div>
-
-      <div className="right-side flex text-white space-x-2 h-full items-center">
-        <Link to='/' className='align-middle'>
-          Home
-        </Link>
-        <Link to='/about' className='items-center' >
-          About
-        </Link>
-        <Link to='/contact' className='items-center'>
-          Contact
-        </Link>
-        {
-          auth ?
-          <button className='items-center' onClick={handleLogout}>
-            Logout
-            </button>
+      <nav className="navbar flex justify-between bg-gray-900 px-6 py-3 items-center shadow-md">
         
-         :
-          <div className='flex justify-between w-32 items-center'>
-          <Link to='/auth/signup' className='items-center' >
-          <button className={button_style}> Signup</button> 
+          {
+            auth?
+            <div className="left-side flex space-x-4">
+            <Link to='/profile' className="hover:scale-110 transition-transform duration-200">
+            <FaRegUserCircle className="icon h-7 w-7 text-gray-300 hover:text-gray-100" />
           </Link>
-          <Link to='/auth/signin' className='items-center' >
-          <button className={button_style}> Login</button> 
+          <Link to='/add' className="hover:scale-110 transition-transform duration-200">
+            <FaPlusCircle className="icon h-7 w-7 text-gray-300 hover:text-gray-100" />
+          </Link>
+          <Link to='/search' className="hover:scale-110 transition-transform duration-200">
+            <FaSearchPlus className="icon h-7 w-7 text-gray-300 hover:text-gray-100" />
           </Link>
           </div>
-}
-        
-
-      </div>
-     <ToastContainer></ToastContainer>
-    </nav>
+          :
+          <div className='text-white font-bold'>Please login to use the Blog app !</div>
+          }
+       
+        <div className="mid-side flex flex-1 justify-center">
+          <Link to='/' className="hover:scale-105 transition-transform duration-200">
+            <img src={logo} alt="Blog Logo" className="h-10" />
+          </Link>
+        </div>
+        <div className="right-side flex text-gray-300 space-x-6 items-center">
+          <Link to='/' className="hover:text-white hover:underline transition duration-200">
+            Home
+          </Link>
+          <Link to='/about' className="hover:text-white hover:underline transition duration-200">
+            About
+          </Link>
+          <Link to='/contact' className="hover:text-white hover:underline transition duration-200">
+            Contact
+          </Link>
+          {
+            auth ?
+              <button className="hover:text-white transition duration-200" onClick={handleLogout}>
+                Logout
+              </button>
+              :
+              <div className="flex space-x-4 items-center">
+                <Link to='/auth/signup'>
+                  <button className={buttonStyle}>
+                    Signup
+                  </button>
+                </Link>
+                <Link to='/auth/signin'>
+                  <button className={buttonStyle}>
+                    Login
+                  </button>
+                </Link>
+              </div>
+          }
+        </div>
+        <ToastContainer />
+      </nav>
     </>
   )
 }
 
-export default Navbar
+export default Navbar;

@@ -14,12 +14,14 @@ function Search() {
      const handleSearch = async (e) => {
       
       
-      await fetch(`${import.meta.env.VITE_BACKEND_API}/blog/`,{
-        search:search.search,
-        method: 'GET',
+      await fetch(`${import.meta.env.VITE_BACKEND_API}/blog/getblogbysearch`,{
+        
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials:'include',
+        body: JSON.stringify(search)
        
        
     }).then((res)=>{
@@ -66,7 +68,7 @@ function Search() {
                <div className='searchout flex flex-col p-2 gap-3'>
                  {searchData.blogs.map((blog)=>{
                      return (
-                       <div className='search-card flex  items-center p-4 bg-slate-700 text-white rounded-md hover:bg-gradient-to-r from-cyan-500 to-blue-500 hover:duration-500'>
+                       <div  key = {blog._id}className='search-card flex  items-center p-4 bg-slate-700 text-white rounded-md hover:bg-gradient-to-r from-cyan-500 to-blue-500 hover:duration-500'>
                          <img src={blog.image} alt="" className='w-16 h-16 object-fit'/>
                          <div className='flex  items-center mt-2'>
                            <h1 className='text-xl'>{blog.title}</h1>

@@ -9,7 +9,7 @@ function Signup() {
   const [errors,setErrors] = useState({name:"",email:"",password:"",confirmPassword:""});
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name);
+  
     setFormData({
         ...formData,
         [name]: value,

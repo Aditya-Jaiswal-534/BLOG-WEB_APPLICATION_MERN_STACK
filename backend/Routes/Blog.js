@@ -34,7 +34,7 @@ router.get('/test',authTokenHanlder,(req,res)=>{
 
 router.post('/',authTokenHanlder,async (req,res)=>{
     try{ const {title,description,category,imageUrl,paragraph} = req.body;
-    console.log(imageUrl);
+    
      const blog = new Blog({
         title,description,category,imageUrl,paragraph,owner:req.userId
      })
@@ -43,7 +43,7 @@ router.post('/',authTokenHanlder,async (req,res)=>{
      if(!user){
          return res.status(404).json({ok:false,error:"user not found"});
      }
-     user.blogs.push(blog._id);
+     user.blogs.push({id:blog._id,name:blog.title});
      await user.save();
      res.status(201).json({ok:true,message:"blog created successfully"});
 
@@ -101,14 +101,14 @@ router.get('/:id',async (req,res)=>{
 
 // search api
 
-router.get('/', async (req,res)=>{
+router.post('/getblogbysearch', async (req,res)=>{
     try{
        
         const search = req.body.search||'';
         const page = parseInt(req.body.page)||1;
         const perpage = 10;
 
-           console.log(search,page);
+         
         const searchQuery = new RegExp(search,'i');
         const totalBlogs = await Blog.countDocuments({title:searchQuery});
         const totalPages = Math.ceil(totalBlogs / perpage);
@@ -116,6 +116,7 @@ router.get('/', async (req,res)=>{
         if(page<1||page>totalPages) return res.status(400).json({message:'Invalid page number'});
         const skip = (page-1)*perpage;
         const blogs = await Blog.find({title:searchQuery}).sort({createdAt:-1}).skip(skip).limit(perpage);
+        
         res.status(200).json({ok:true,message:"'Blogs fetched successfully'",data:{blogs, totalPages, currentPage: page,totalBlogs: totalBlogs}})
            
     }
